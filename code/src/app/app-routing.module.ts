@@ -23,6 +23,12 @@ const routes: Routes = [
   {
     path: 'user',
     component: UserLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./views/notes/notes.module').then(m => m.NotesModule)
+      }
+    ]
   },
 ];
 
