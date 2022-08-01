@@ -6,18 +6,32 @@ import { BlankLayoutComponent } from './sheared/components/layouts/blank-layout/
 import { UserLayoutComponent } from './sheared/components/layouts/user-layout/user-layout.component';
 
 const routes: Routes = [
-    {
+  {
     path: '',
-    component:BlankLayoutComponent
+    component: BlankLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./views/pages/pages.module').then((m) => m.PagesModule),
+      }
+    ]
   },
   {
     path: 'admin',
     component: AdminLayoutComponent,
+    children: [
+      {
+        path: 'post',
+        loadChildren: () =>
+          import('./views/posts/posts.module').then((m) => m.PostsModule),
+      },
+    ],
   },
 
-    {
+  {
     path: 'auth',
-    component:AuthLayoutComponent
+    component: AuthLayoutComponent,
   },
 
   {
@@ -25,10 +39,11 @@ const routes: Routes = [
     component: UserLayoutComponent,
     children: [
       {
-        path: '',
-        loadChildren: () => import('./views/notes/notes.module').then(m => m.NotesModule)
-      }
-    ]
+        path: 'notes',
+        loadChildren: () =>
+          import('./views/notes/notes.module').then((m) => m.NotesModule),
+      },
+    ],
   },
 ];
 
